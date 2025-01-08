@@ -23,10 +23,23 @@ public class JwtCustomFilter extends OncePerRequestFilter {
     JwtService jwtService;
 
     private final String bearer="Bearer ";
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        System.out.println("Current path: " + path);
+        return path.startsWith("/v3/api-docs") ||
+                path.startsWith("/swagger-ui.html") ||
+                path.startsWith("/swagger-ui/") ||
+                path.startsWith("/webjars") ||
+                path.startsWith("/auth/login") ||
+                path.startsWith("/auth/register");
+    }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-            final String authorizationHeader=request.getHeader("Authorization");
-        System.out.println("hello running");
+
+        final String authorizationHeader=request.getHeader("Authorization");
+        System.out.println("jwt filter running");
             String email=null;
             String token=null;
 

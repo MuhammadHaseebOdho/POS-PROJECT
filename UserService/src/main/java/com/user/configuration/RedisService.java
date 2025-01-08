@@ -14,18 +14,17 @@ public class RedisService {
     private RedisTemplate<String, Object> redisTemplate;
 
     public void saveToken(String token, String username, long durationInSeconds) {
-        // Save token with expiry time
         redisTemplate.opsForValue().set(token, username, durationInSeconds, TimeUnit.SECONDS);
     }
 
     public boolean validateToken(String token) {
-        // Check if the token exists in Redis
+
         System.out.println("TOKEN:::"+token);
         return redisTemplate.hasKey(token);
     }
 
     public void deleteToken(String token) {
-        // Delete token from Redis
+
         redisTemplate.delete(token);
     }
 

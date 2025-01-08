@@ -5,6 +5,7 @@ import com.user.configuration.JwtService;
 import com.user.model.User;
 import com.user.payload.AuthorizationRequest;
 import com.user.payload.AuthorizationResponse;
+import com.user.payload.UserResponseDto;
 import com.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,10 +35,10 @@ public class AuthController {
     CustomUserDetailsService customUserDetailsService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user){
+    public ResponseEntity<UserResponseDto> registerUser(@RequestBody User user){
         System.out.println("Hello");
-        User userServiceUser = userService.createUser(user);
-        return new ResponseEntity<>(userServiceUser, HttpStatus.CREATED);
+        UserResponseDto responseDto = userService.createUser(user);
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
